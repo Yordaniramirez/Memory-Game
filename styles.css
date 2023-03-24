@@ -109,26 +109,3 @@
   }
 }
 
-.avatars {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.player1-avatar {
-  width: 80px;
-  height: 80px;
-  background-color: #3b5998; /* Blue background color */
-  background-image: url("./img/Avatar-Y.png"); /* Replace with your player 1 avatar image path */
-  background-size: cover;
-  border-radius: 50%;
-}
-
-.player2-avatar {
-  width: 80px;
-  height: 80px;
-  background-color: #dd4b39; /* Red background color */
-  background-image: url("./img/myAvatar-1.png"); /* Replace with your player 2 avatar image path */
-  background-size: cover;
-  border-radius: 50%;
-}
