@@ -1,74 +1,77 @@
 /* Global Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Page Layout */
-  body {
-    background-color: #f8f8f8;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  }
-  
-  .container {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-  }
-  
-  /* Heading */
-  .heading {
-    color: #333;
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
-  }
-  
-  /* Cards */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 2rem;
-    justify-items: center;
-  }
-  
-  .card {
-    height: 100px;
-    width: 90px;
-    background-color: #fff00f;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease-out;
-    display: grid;
-    place-items: center;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card img {
-    width: 80%;
-    max-height: 90px;
-    transition: opacity 0.3s ease-out;
-    opacity: 0;
-  }
-  
-  .card.clicked{
-    background-color: #FF7F50;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .card.goed{
-    background-color: lightgreen;
-  }
- 
-.card.clicked img, .card.goed img {
+/* Page Layout */
+body {
+  background-color: #f8f8f8;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+/* Heading */
+.heading {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  justify-items: center;
+}
+
+.card {
+  height: 100px;
+  width: 90px;
+  margin: 10px;
+  background-color: #fff00f;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-out;
+  display: grid;
+  place-items: center;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-out;
+  opacity: 0;
+}
+
+.card.clicked {
+  background-color: #FF7F50;
+}
+
+.card.goed {
+  background-color: lightgreen;
+}
+
+.card.clicked img,
+.card.goed img {
   opacity: 1;
 }
 
-.card.shake{
+.card.shake {
   background-color: rgb(249, 76, 76);
   animation: shake 0.5s;
 }
@@ -108,4 +111,3 @@
     transform: translate(1px, -2px) rotate(-1deg);
   }
 }
-
