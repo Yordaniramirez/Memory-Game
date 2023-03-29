@@ -13,23 +13,72 @@ const cards = document.querySelectorAll(".cards .card");
 const currentPlayer = document.querySelector(".current-player");
 const player1ScoreElement = document.querySelector(".player1-score");
 const player2ScoreElement = document.querySelector(".player2-score");
+const player1Timer = document.querySelector('.player1-timer');
+const player2Timer = document.querySelector('.player2-timer');
 
+let timer;
+let timeLeft1;
+let timeLeft2;
 
-// Switch player turn after each successful match
-function switchPlayer() {
-    // Check if current player has a matching card
-    const matchedCards = document.querySelectorAll(`.card.goed.player${playerTurn}`);
-    if (matchedCards.length < 2) {
-      // If current player does not have a matching card, switch to the other player
-      playerTurn = playerTurn === 1 ? 2 : 1;
-      currentPlayer.textContent = playerTurn;
-      const otherPlayerTurn = playerTurn === 1 ? 2 : 1;
-      document.querySelector(`.player${playerTurn}-avatar`).classList.add('active');
-      document.querySelector(`.player${otherPlayerTurn}-avatar`).classList.remove('active');
+resetTimers();
+
+function resetTimers() {
+  timeLeft1 = 30;
+  timeLeft2 = 30;
+  player1Timer.textContent = timeLeft1;
+  player2Timer.textContent = timeLeft2;
+}
+
+function startTimer() {
+  if (currentPlayer.textContent === "1") {
+    resetTimers();
+  } else {
+    resetTimers();
+  }
+  timer = setInterval(function() {
+    if (currentPlayer.textContent === "1") {
+        
+      player1Timer.textContent = timeLeft1;
+      timeLeft1--;
+      if (timeLeft1 < 0) {
+        clearInterval(timer);
+        resetTimers();
+        switchPlayers();
+      }
+    } else {
+      player2Timer.textContent = timeLeft2;
+      timeLeft2--;
+      if (timeLeft2 < 0) {
+        resetTimers();
+     
+        switchPlayers();
+      }
     }
+  }, 1000);
+}
+
+function switchPlayers() {
+    clearInterval(timer);
+    if (currentPlayer.textContent === "1") {
+      currentPlayer.textContent = "2";
+      resetTimers(); // reset timer for player 1
+      player1Timer.classList.remove('active');
+      player2Timer.classList.add('active');
+    } else {
+      currentPlayer.textContent = "1";
+      resetTimers(); // reset timer for player 2
+      player2Timer.classList.remove('active');
+      player1Timer.classList.add('active');
+    }
+    // Stop the timer before starting it again
+    startTimer();
   }
   
-  
+
+startTimer();
+player1Timer.classList.add('active');
+
+
 
 cards.forEach((card) => {
   card.addEventListener("click", () => {
@@ -75,8 +124,8 @@ cards.forEach((card) => {
           incorrectCards[0].classList.remove("clicked");
           incorrectCards[1].classList.remove("shake");
           incorrectCards[1].classList.remove("clicked");
-          switchPlayer(); // Switch player turn
-        }, 800);
+          switchPlayers(); // Switch player turn
+        }, 900);
       }
     }
      
@@ -100,14 +149,17 @@ cards.forEach((card) => {
         });
       
         // Shuffle the cards
-        const deck = document.querySelector(".cards");
-        for (let i = 0; i < deck.children.length; i++) {
-          deck.appendChild(deck.children[Math.random() * i | 0]);
+        const cardArray = Array.from(cards);
+        for (let i = cardArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cardArray[i], cardArray[j]] = [cardArray[j], cardArray[i]];
         }
-
-        
+        const deck = document.querySelector(".cards");
+        cardArray.forEach((card) => {
+          deck.appendChild(card);
+        });
       }
-     
+
       // Check if all cards are matched
 if (document.querySelectorAll(".card.goed").length === cards.length) {
     // Determine the winner
@@ -149,6 +201,7 @@ if (document.querySelectorAll(".card.goed").length === cards.length) {
         card.classList.remove("goed");
         card.classList.remove("clicked");
         card.classList.remove("shake");
+        restartGame();
       });
   
       // Shuffle the cards
@@ -157,13 +210,12 @@ if (document.querySelectorAll(".card.goed").length === cards.length) {
         deck.appendChild(deck.children[Math.random() * i | 0]);
       }
     }
-  }
-  
-      
+  }  
 
   }
   
   );
+  
 });
 
 
