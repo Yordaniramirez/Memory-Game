@@ -30,27 +30,17 @@ function resetTimers() {
 }
 
 function startTimer() {
-  if (currentPlayer.textContent === "1") {
-    resetTimers();
-  } else {
-    resetTimers();
-  }
+  resetTimers();
   timer = setInterval(function() {
     if (currentPlayer.textContent === "1") {
-        
-      player1Timer.textContent = timeLeft1;
-      timeLeft1--;
+      player1Timer.textContent = timeLeft1--;
       if (timeLeft1 < 0) {
         clearInterval(timer);
-        resetTimers();
         switchPlayers();
       }
     } else {
-      player2Timer.textContent = timeLeft2;
-      timeLeft2--;
+      player2Timer.textContent = timeLeft2--;
       if (timeLeft2 < 0) {
-        resetTimers();
-     
         switchPlayers();
       }
     }
@@ -58,25 +48,29 @@ function startTimer() {
 }
 
 function switchPlayers() {
-    clearInterval(timer);
-    if (currentPlayer.textContent === "1") {
-      currentPlayer.textContent = "2";
-      resetTimers(); // reset timer for player 1
-      player1Timer.classList.remove('active');
-      player2Timer.classList.add('active');
-    } else {
-      currentPlayer.textContent = "1";
-      resetTimers(); // reset timer for player 2
-      player2Timer.classList.remove('active');
-      player1Timer.classList.add('active');
-    }
-    // Stop the timer before starting it again
-    startTimer();
+  clearInterval(timer);
+  if (currentPlayer.textContent === "1") {
+    currentPlayer.textContent = "2";
+    playerTurn = 2; // Update player turn to 2
+    resetTimers(); // reset timer for player 1
+    player1Timer.classList.remove('active');
+    player2Timer.classList.add('active');
+  } else {
+    currentPlayer.textContent = "1";
+    playerTurn = 1; // Update player turn to 1
+    resetTimers(); // reset timer for player 2
+    player2Timer.classList.remove('active');
+    player1Timer.classList.add('active');
   }
+  // Stop the timer before starting it again
+  startTimer();
+}
+
   
 
 startTimer();
 player1Timer.classList.add('active');
+resetTimers();
 
 
 
@@ -146,18 +140,9 @@ cards.forEach((card) => {
           card.classList.remove("goed");
           card.classList.remove("clicked");
           card.classList.remove("shake");
+          resetTimers();
         });
       
-        // Shuffle the cards
-        const cardArray = Array.from(cards);
-        for (let i = cardArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [cardArray[i], cardArray[j]] = [cardArray[j], cardArray[i]];
-        }
-        const deck = document.querySelector(".cards");
-        cardArray.forEach((card) => {
-          deck.appendChild(card);
-        });
       }
 
       // Check if all cards are matched
