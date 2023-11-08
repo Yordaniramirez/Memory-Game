@@ -37,13 +37,13 @@ function startTimer() {
   timer = setInterval(function() {
     if (currentPlayer.textContent === "1") {
       player1Timer.textContent = --timeLeft1;
-      if (timeLeft1 < 0) {
+      if (timeLeft1 <= 0) {
         clearInterval(timer);
         switchPlayers();
       }
     } else {
       player2Timer.textContent = --timeLeft2;
-      if (timeLeft2 < 0) {
+      if (timeLeft2 <= 0) {
         clearInterval(timer);
         switchPlayers();
       }
@@ -54,6 +54,11 @@ function startTimer() {
 // Functie om van speler te wisselen
 function switchPlayers() {
   clearInterval(timer); // stop de timer
+  timer = null;
+
+   // Reset de timers
+   resetTimers();
+  
   setTimeout(() => { // voeg een vertraging toe voordat de speler wisselt
     if (currentPlayer.textContent === "1") {
       currentPlayer.textContent = "2";
@@ -69,7 +74,7 @@ function switchPlayers() {
       player1Timer.classList.add('active');
     }
     startTimer(); // start de timer weer na het wisselen van speler
-  }, 1000); // wacht 1 seconde voordat de speler wisselt
+  }, 2000); // wacht 1 seconde voordat de speler wisselt
 }
 
 // Voeg deze functie toe om de timer te pauzeren
@@ -81,7 +86,7 @@ function pauseTimer() {
 // en startTimer() wanneer de volgende beurt begint
 
 // Start de timer
-startTimer();
+// startTimer();
 
 // Voeg 'active' class toe aan de timer van speler 1
 player1Timer.classList.add('active');
@@ -93,6 +98,11 @@ resetTimers();
 cards.forEach((card) => {
   card.addEventListener("click", () => {
     // Controleer of de kaart al gematcht of geklikt is
+
+    if (!timer) {
+      startTimer();
+    }
+
     if (card.classList.contains("goed") || card.classList.contains("clicked")) {
       return;
     }
@@ -137,7 +147,7 @@ cards.forEach((card) => {
           setTimeout(() => {
             incorrectCard.classList.remove("shake");
             incorrectCard.classList.remove("clicked");
-          }, 900);
+          }, 2000);
         });
         switchPlayers();
       }
